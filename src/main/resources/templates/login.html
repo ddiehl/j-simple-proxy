@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorator="fragments/layout" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:th="http://www.thymeleaf.org">
+
+	<div layout:fragment="content">
+		<script type="text/javascript">
+			init = function () {
+				$("#menu-login").addClass("active");
+			}
+		</script>
+	
+		<div class="row">
+			<div class="col-sm-3">&nbsp;</div>
+			<div class="col-sm-6">
+				<div th:if="${param.error}" class="alert alert-block alert-danger fade in">
+					<button data-dismiss="alert" class="close close-sm" type="button">
+						<i class="fa fa-times"></i>
+					</button>
+					<strong>Oh snap!</strong> 
+					Your login attempt was not successful, try again. Caused by: 
+					<span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+				</div>
+			  	
+			  	<form id="formlogin" class="form-signin" th:action="@{/_jSimpleProxyAdmin/login}" method="POST">
+			        <h2 class="form-signin-heading">sign in now</h2>
+					<div class="login-wrap">
+						<input type="text" name="username" class="form-control" placeholder="User ID" autofocus="autofocus"></input> 
+						<input type="password" name="password" class="form-control" placeholder="Password"></input> 
+						<button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
+					</div>
+			    </form>
+			</div>
+			<div class="col-sm-3">&nbsp;</div>
+		</div>
+	</div>
+</html>

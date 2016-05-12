@@ -1,0 +1,15 @@
+endpoints:
+  jmx:
+    domain: jsimple-proxy
+    uniqueNames: true
+
+spring:
+  aop:
+    auto: true
+    proxy-target-class: true
+  datasource:
+    url: jdbc:hsqldb:file:./.proxydb
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

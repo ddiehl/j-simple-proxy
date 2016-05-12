@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" 
+	  xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	  xmlns:th="http://www.thymeleaf.org">
+	<head>
+    	<meta charset="utf-8"/>
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    	<meta name="description" content="Utility app for testing conectivity"/>
+    	<meta name="author" content="Daniel Conde Diehl"/>
+		
+    	<title>JSimple Proxy</title>
+
+		<base th:href="@{/_jSimpleProxyAdmin/}"/>  
+
+		<link rel="shortcut icon" th:href="@{/img/favicon.ico}" />
+			
+		<link th:href="@{http://fonts.googleapis.com/css?family=Oswald}" rel='stylesheet' type='text/css'/>
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/normalize-css/normalize.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/animate.css/animate.min.css}" rel="stylesheet" type="text/css" />
+		
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+		
+		<link th:href="@{/_jSimpleProxyAdmin/static/bower_components/footable/compiled/footable.bootstrap.min.css}" rel="stylesheet" type="text/css" />
+
+		<link th:href="@{/_jSimpleProxyAdmin/static/css/internal.css}" rel="stylesheet"/>
+		
+		<!-- jquery-ui
+		<link th:href="@{/_jSimpleProxyAdmin/static/css/jquery-ui-1.10.4.custom.css}" rel="stylesheet" type="text/css" />
+		 -->		
+		
+
+		<!-- external libraries Javascripts -->
+	    <script th:src="@{/_jSimpleProxyAdmin/static/bower_components/jquery/dist/jquery.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+	    <!--  
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/jquery-ui.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/jquery.zoom.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/select2.full.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/bootstrap-notify.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/jquery.dataTables.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/dataTables.bootstrap.min.js}"></script>
+	    <script th:src="@{/_jSimpleProxyAdmin/static/js/external/moment.min.js}"></script>	 
+	    -->
+		<script th:src="@{/_jSimpleProxyAdmin/static/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js}"></script>
+		<script th:src="@{/_jSimpleProxyAdmin/static/bower_components/footable/compiled/footable.min.js}"></script>
+		<script th:src="@{/_jSimpleProxyAdmin/static/bower_components/bootbox.js/bootbox.js}"></script>
+
+		<script th:src="@{/_jSimpleProxyAdmin/static/js/utils.js}"></script>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    	
+    	
+    	
+	    <script th:inline="javascript">
+			init = function() {};
+			
+			$(document).ready(function () {
+			    var token = /*[[${_csrf.token}]]*/ 'invalid';
+				utils.configureCsrf(token);
+				utils.configureLogout();
+				init();
+			});
+		</script>
+  	</head>
+
+	<body>
+
+    	<nav class="navbar navbar-inverse navbar-fixed-top">
+      		<div class="container-fluid">
+        		<div class="navbar-header">
+          			<button type="button" class="navbar-toggle" data-target="#menu" data-toggle="offcanvas">
+            			<span class="sr-only">Toggle navigation</span>
+            			<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+            			<span class="icon-bar"></span>
+          			</button>
+          			<a class="navbar-brand" href="#">JSimple Proxy</a>
+        		</div>
+      		</div>
+    	</nav>
+
+    	<div class="container-fluid">
+      		<div class="row row-offcanvas row-offcanvas-left">
+        		<div id="menu" class="col-xs-6 col-sm-3 offcanvas-xs navmenu navmenu-default">
+          				<div layout:include="fragments/menu" th:remove="tag"></div>
+        		</div>
+	       		<div class="col-xs-12 col-sm-9 main">
+          			<div layout:fragment="content" th:remove="tag"></div>
+        		</div>
+			</div>
+		</div>
+	</body>	
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html layout:decorator="fragments/layout" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:th="http://www.thymeleaf.org">
+
+	<div layout:fragment="content">
+		<script type="text/javascript">
+			init = function () {
+				$("#menu-main").addClass("active");
+			}
+		</script>
+
+		<div class="row">
+			<div class="col-log-12 col-md-12 col-sm-12" style="text-align:center">
+				<div style="text-align=center;font-size: 16pt;font-weight: bold;">
+					JSimple Proxy Admin
+				</div>
+				<br/><br/>
+				Configuration tools for proxy endpoints.
+			</div>
+		</div>
+	</div>
+
+</html>

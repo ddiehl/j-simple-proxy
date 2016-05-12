@@ -1,0 +1,6 @@
+# SECURITY (SecurityProperties)
+security:
+  user:
+    name: "admin"
+    password: "!admin123"
+    role: ADMIN

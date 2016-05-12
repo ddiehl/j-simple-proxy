@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorator="fragments/layout" 
+      xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:th="http://www.thymeleaf.org">
+
+	<div layout:fragment="content">
+		<script th:src="@{/_jSimpleProxyAdmin/static/js/config.js}"></script>
+		<div id="success-msg" class="alert alert-success" role="alert" style="display:none"></div>
+		<div id="error-msg" class="alert alert-danger" role="alert" style="display:none"></div>
+		<div class="row">
+			<form id="config-form">
+				<input name="id" type="hidden" id="form-id" />
+			
+				<div class="col-sm-5">
+  					<div class="form-group">
+    					<label for="origin">Origin</label>
+    					<input name="origin" type="text" class="form-control" id="form-origin" placeholder="Origin URL" required="required"/>
+  					</div>
+				</div>
+				<div class="col-sm-5">
+  					<div class="form-group">
+    					<label for="destination">Destination</label>
+    					<input name="destination" type="text" class="form-control" id="form-destination" placeholder="Destination URL" required="required"/>
+  					</div>
+				</div>
+				<div class="col-sm-2" style="padding-top: 26px">
+				  	<button id="submitRequest" type="submit" class="btn btn-default" data-loading-text="Saving...">Save Proxy</button>
+				  	<button id="resetForm" type="reset" class="btn btn-default">Clear</button>
+				</div>
+			</form>
+		</div>
+		<div class="row" style="margin-bottom: 20px;">
+			<div class="col-sm-12" >
+				<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseHelp" aria-expanded="false" aria-controls="collapseHelp">
+  					Usage help
+				</a>
+				<div class="collapse" id="collapseHelp">
+  					<div class="well">
+						<span style="font-style: italic;font-weight: bold;">Origin</span> should be the URI that you want to be proxied, eg: <i>/test/new</i>. <br/>
+						<span style="font-style: italic;font-weight: bold;">Destination</span> is the Full URL where you want the call to be proxied, eg: <i>http://www.google.com/</i>
+						<br/><br/>
+						You can use <b><i>wildcards(*)</i></b> in the origin url. For example if you want everything that starts with <i>/test</i> to be proxied you can use <i>/test/*</i>.<br/>
+						You can also use named Parameters <b><i>{parameter_name}</i></b> to pass content from the origin to destiny. Example: Origin- /test/{name}, destination: http://www.google.com/q={name}.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="panel panel-default">
+	  				
+	  				<div class="panel-heading" style="text-align: center;font-weight: bold;">Proxies</div>
+	  				<div class="panel-body">
+	    				<p>This is a list of configured proxies in the system.</p>
+	  				</div>
+					<table id="proxiesTable" class="table table-striped" data-paging="true" data-filtering="true">
+						<thead>
+							<tr>
+								<th style="width: 45%">Origin</th>
+								<th data-breakpoints="sm xs" style="width: 45%">Destination</th>
+								<th style="width: 5%" data-type="html" data-filterable="false">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody id="proxiesTbody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</html>
+						
