@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration debug="true" scan="true" scanPeriod="60 seconds">
+
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" optional="false"/>
+    <include file="./config/logback-conf.xml" optional="true"/>
+
+</configuration>

@@ -11,7 +11,7 @@
     	<meta name="description" content="Utility app for testing conectivity"/>
     	<meta name="author" content="Daniel Conde Diehl"/>
 		
-    	<title>JSimple Proxy</title>
+    	<title th:text="${@environment.getProperty('app-name')}">JSimple Proxy</title>
 
 		<base th:href="@{/_jSimpleProxyAdmin/}"/>  
 

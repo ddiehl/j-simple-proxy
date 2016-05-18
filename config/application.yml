@@ -4,3 +4,5 @@ security:
     name: "admin"
     password: "!admin123"
     role: ADMIN
+    
+app-name: Daniel proxy

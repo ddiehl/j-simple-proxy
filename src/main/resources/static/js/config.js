@@ -34,7 +34,6 @@ configPage.createTableRow = function (proxy) {
 							.click(configPage.deleteProxy)
 							.append($('<span>')
 										.addClass("glyphicon glyphicon-remove")
-										
 										.css("color", "red")
 										.attr("aria-hidden", "true")
 						))
@@ -56,17 +55,19 @@ configPage.deleteProxy = function (e) {
 	e.preventDefault();
 	var proxyId = $( this ).data("proxyId");
 	bootbox.confirm("Do you want want to delete this proxy?", function(result) {
-		$.ajax({
-			method: "DELETE",
-			url: utils.getBaseUrl() +"proxies/" + proxyId
-		})
-		.done(function (proxies) {
-			configPage.loadTable();
-			configPage.successAlert("Proxy deleted");
-		})
-		.fail(function (e) {
-			configPage.errorAlert("Error deleting: " + e);
-		});
+		if (result) {
+			$.ajax({
+				method: "DELETE",
+				url: utils.getBaseUrl() +"proxies/" + proxyId
+			})
+			.done(function (proxies) {
+				configPage.loadTable();
+				configPage.successAlert("Proxy deleted");
+			})
+			.fail(function (e) {
+				configPage.errorAlert("Error deleting: " + e);
+			});			
+		}
 	}); 
 };
 

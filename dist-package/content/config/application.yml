@@ -1,0 +1,13 @@
+#Listening port
+server: 
+  port: __PORT__
+
+# SECURITY (SecurityProperties)
+security:
+  user:
+    name: "__ADMIN_USER__"
+    password: "__ADMIN_PASS__"
+    role: ADMIN
+    
+#Customize Application Title - OPTIONAL    
+app-name: "__APP_NAME__"
