@@ -65,7 +65,7 @@
 			init = function() {};
 			
 			$(document).ready(function () {
-			    var token = /*[[${_csrf.token}]]*/ 'invalid';
+			    var token = /*[[${_csrf != null ? _csrf.token : 'invalid'}]]*/ 'invalid';
 				utils.configureCsrf(token);
 				utils.configureLogout();
 				init();

@@ -14,7 +14,7 @@ package org.sparta.simpleproxy.constant;
  *    May 10, 2016 - Daniel Conde Diehl
  *
  */
-public class SimpleProxyConstants {
+public abstract class SimpleProxyConstants {
 		
 	/**
 	 * Response in case proxy was not found.
@@ -26,8 +26,13 @@ public class SimpleProxyConstants {
 	 */
 	public static final String ADMIN_PREFIX = "_jSimpleProxyAdmin";
 	
-	   /**
+	/**
      * Admin prefix URL.
      */
     public static final String ADMIN_URL = "/"+ADMIN_PREFIX;
+    
+    /**
+     * Marker of the end of URL.
+     */
+    public static final String END_URL_MARKER = "/";
 }

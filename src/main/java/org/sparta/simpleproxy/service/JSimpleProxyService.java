@@ -4,6 +4,8 @@
  */
 package org.sparta.simpleproxy.service;
 
+import static org.sparta.simpleproxy.constant.SimpleProxyConstants.END_URL_MARKER;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,8 +49,12 @@ public class JSimpleProxyService {
         
         Iterable<Proxy> proxies = proxyRepo.findAll();
         for (Proxy proxy : proxies) {
+            //Replace regex special characters
+            String treatedUrl = proxy.getOrigin().replaceAll("\\.", "\\\\.");
             //Accepts wildcard
-            String treatedUrl = proxy.getOrigin().replaceAll("\\*", ".\\*?");
+            treatedUrl = treatedUrl.replaceAll("\\*", ".\\*?");
+            //If the URL ends with group it does not find, so adding a ending character
+            treatedUrl = treatedUrl + END_URL_MARKER;
             
             //Accepts variables
             List<String> paramNames = null;
@@ -68,7 +74,7 @@ public class JSimpleProxyService {
                 
             LOG.debug("Testing proxy origin={}", treatedUrl);
             Pattern pattern = Pattern.compile(treatedUrl);
-            Matcher matcher = pattern.matcher(url);
+            Matcher matcher = pattern.matcher(url + END_URL_MARKER);
             if (matcher.find()) {
                 //Found proxy, to be used 
                 String finalDestination = proxy.getDestination(); 
@@ -79,7 +85,7 @@ public class JSimpleProxyService {
                     finalDestination = StringUtils.replace(finalDestination, "{"+paramNames.get(i-1) +"}", matcher.group(i));
                 }
                 
-                //return rsponse
+                //return response
                 LOG.info("Proxy found to URL:{}, matches with={}, id={}, destinationURL={}", finalDestination, treatedUrl, proxy.getId(), finalDestination);
                 return finalDestination;
             } else {

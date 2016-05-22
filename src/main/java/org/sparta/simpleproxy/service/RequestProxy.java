@@ -77,8 +77,10 @@ public class RequestProxy {
             resp.setStatus(conn.getResponseCode());
             Map<String, List<String>> header = conn.getHeaderFields();
             for (String headerName : header.keySet()) {
-                final String value = conn.getHeaderField(headerName);
-                resp.setHeader(headerName, value);
+                if (headerName != null) {
+                    final String value = conn.getHeaderField(headerName);
+                    resp.setHeader(headerName, value);
+                }
             }
 
             while (true) {

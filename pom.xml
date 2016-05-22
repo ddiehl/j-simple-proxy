@@ -39,7 +39,6 @@
 		<guava.version>18.0</guava.version>
 		<cglib.version>3.1</cglib.version>
 		<jmockit.version>1.23</jmockit.version>
-		
 	</properties>
 
 	<dependencies>
@@ -112,6 +111,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.skyscreamer</groupId>
+		    <artifactId>jsonassert</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-test</artifactId>
 		</dependency>
 		<!-- END: TESTING DEPENDENCIES -->
 	</dependencies>
