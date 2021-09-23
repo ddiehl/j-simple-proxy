@@ -1,10 +1,6 @@
 /*
- * Copyright (c) Bright House Networks. All Rights Reserved.
- * This software is the confidential and proprietary information of
- * Bright House Networks or its affiliates. You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license agreement you entered into
- * with Bright House Networks.
+ * Sparta Software Co.
+ * 2015
  */
 package org.sparta.simpleproxy.service;
 
@@ -24,10 +20,11 @@ import org.sparta.simpleproxy.repository.ProxyRepository;
  *
  * Unit Tests for JSImpleProxy Service class.
  *
- * @author dxdiehl
+ * @author Daniel Conde Diehl
  *
  * History:
- *    May 10, 2016 - dxdiehl
+ *    May 10, 2016 - Daniel Conde Diehl
+ *    Sep 23, 2021 - Daniel Conde Diehl - adding extra tests for URL with variables.
  *
  */
 public class JSimpleProxyServiceTest {
@@ -229,7 +226,55 @@ public class JSimpleProxyServiceTest {
         final String actualDestination = tested.findDestinationUrl("/users/daniel/secret/test");
         Assert.assertEquals("http://localhost/proxy2/name/daniel/password/secret", actualDestination);
     }
-    
+
+    @Test
+    public void testFindDestinationUrlVariableMatchWholeEnding() {
+        final List<Proxy> proxies = new LinkedList<>();
+
+        final Proxy proxy1 = new Proxy();
+        proxy1.setOrigin("/notThisOne");
+        proxy1.setDestination("http://localhost/proxy1");
+        proxies.add(proxy1);
+
+        final Proxy proxy2 = new Proxy();
+        proxy2.setOrigin("/users/test/{var1}");
+        proxy2.setDestination("http://localhost/proxy2/{var1}");
+        proxies.add(proxy2);
+
+        new Expectations() {{
+            proxyRepo.findAll();
+            result = proxies;
+        }};
+
+        final String actualDestination = tested.findDestinationUrl("/users/test/secret/new?abc=1");
+        Assert.assertEquals("http://localhost/proxy2/secret/new?abc=1", actualDestination);
+    }
+
+
+    @Test
+    public void testFindDestinationUrlVariableMatchWholeEnding2() {
+        final List<Proxy> proxies = new LinkedList<>();
+
+        final Proxy proxy1 = new Proxy();
+        proxy1.setOrigin("/notThisOne");
+        proxy1.setDestination("http://localhost/proxy1");
+        proxies.add(proxy1);
+
+        final Proxy proxy2 = new Proxy();
+        proxy2.setOrigin("/swagger-central/api/{parameter_name}");
+        proxy2.setDestination("http://new-server/swagger/api/{parameter_name}");
+        proxies.add(proxy2);
+
+        new Expectations() {{
+            proxyRepo.findAll();
+            result = proxies;
+        }};
+
+        final String actualDestination = tested.findDestinationUrl("/swagger/api/diehl-service/v0/diehl?countryCode=US&validOnDate=2018-01-01&asOfDate=2019-12-01T00%3A15%3A10.000Z");
+        Assert.assertEquals("http://new-server/swagger/api/diehl-service/v0/diehl?countryCode=US&validOnDate=2018-01-01&asOfDate=2019-12-01T00%3A15%3A10.000Z", actualDestination);
+    }
+
+
     @Test
     public void testFindDestinationUrlVariableMatchPartialReplacements() {
         final List<Proxy> proxies = new LinkedList<>();

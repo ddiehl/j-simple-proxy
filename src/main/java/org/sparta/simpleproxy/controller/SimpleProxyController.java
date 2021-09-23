@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * History:
  *    May 10, 2016 - Daniel Conde Diehl
+ *    Sep 23, 2021 - Daniel Conde Diehl - Adding queryString to proxied URL
  *
  */
 @RestController
@@ -44,14 +45,21 @@ public class SimpleProxyController {
 
     
 	/**
-	 * Mock for method of payment notification
+	 * Mock for method of payment notification.
 	 * 
 	 * @param request Request Parameters
 	 * @return AddPaymentMethodResponse Response	
 	 */
     @RequestMapping(value = { "{path:(?!"+ADMIN_PREFIX +").*$}", "{path:(?!"+ADMIN_PREFIX +").*$}/**"})
 	public void proxy(@RequestBody(required=false) String body, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        final String destination = jsProxyService.findDestinationUrl(request.getRequestURI());
+        final String fullUrl;
+        if (request.getQueryString() == null) {
+            fullUrl = request.getRequestURI();
+        } else {
+            fullUrl = request.getRequestURI() + '?' + request.getQueryString();
+        }
+
+        final String destination = jsProxyService.findDestinationUrl(fullUrl);
         final String method = request.getMethod();
         if (destination != null) {
             proxy.forwardRequest(destination, method, request, response, body);

@@ -6,7 +6,7 @@
 	
 	<groupId>org.sparta.simplelog</groupId>
 	<artifactId>j-simple-proxy</artifactId>
-	<version>1.0</version>
+	<version>1.2</version>
 	<packaging>jar</packaging>
 	<name>JSimple Proxy</name>
 	<description>Simple proxy implementation</description>
@@ -21,7 +21,7 @@
 	<properties>
 		<!-- General Properties -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.7</java.version>
+		<java.version>1.8</java.version>
 
 		<!-- Spring Boot properties -->
 		<start-class>org.sparta.simpleproxy.SimpleProxyBootApplication</start-class>

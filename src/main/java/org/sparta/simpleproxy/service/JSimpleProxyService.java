@@ -1,15 +1,8 @@
-/* 
+/*
  * Sparta Software Co.
  * 2015
  */
 package org.sparta.simpleproxy.service;
-
-import static org.sparta.simpleproxy.constant.SimpleProxyConstants.END_URL_MARKER;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,72 +12,74 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
- *
  * Business service for JSimpleProxy.
  *
  * @author Daniel Conde Diehl
  *
  * History:
- *    May 10, 2016 - Daniel Conde Diehl
- *
+ *      May 10, 2016 - Daniel Conde Diehl
+ *      Sep 23, 2021 - Daniel Conde Diehl - Fixing missing path variables in the proxy
  */
 @Service
 public class JSimpleProxyService {
-    
-    private static final Logger LOG = LoggerFactory.getLogger(JSimpleProxyService.class); 
-    
+
+    private static final Logger LOG = LoggerFactory.getLogger(JSimpleProxyService.class);
+
     @Autowired
     private ProxyRepository proxyRepo;
-    
-    
+
+
     /**
      * Finds destination URL for the given URL looking at database.
-     * 
+     *
      * @param url URL to match
      * @return destination if found, otherwise null
      */
-    public String findDestinationUrl (String url) {
+    public String findDestinationUrl(String url) {
         LOG.info("Locating proxy for URL:{}", url);
-        
+
         Iterable<Proxy> proxies = proxyRepo.findAll();
         for (Proxy proxy : proxies) {
             //Replace regex special characters
             String treatedUrl = proxy.getOrigin().replaceAll("\\.", "\\\\.");
             //Accepts wildcard
             treatedUrl = treatedUrl.replaceAll("\\*", ".\\*?");
-            //If the URL ends with group it does not find, so adding a ending character
-            treatedUrl = treatedUrl + END_URL_MARKER;
-            
+
             //Accepts variables
             List<String> paramNames = null;
             if (treatedUrl.contains("{")) {
                 //Finds the parameters
                 paramNames = new ArrayList<>();
                 final Pattern pattern = Pattern.compile("\\{(.*?)\\}");
-                final Matcher matcher  = pattern.matcher(treatedUrl);
-                while(matcher.find()) {
+                final Matcher matcher = pattern.matcher(treatedUrl);
+                while (matcher.find()) {
                     LOG.trace("Parameter found=[{}]", matcher.group(1));
                     paramNames.add(matcher.group(1));
                 }
-                
+
                 //Add replacement groups
-                treatedUrl = treatedUrl.replaceAll("\\{.*?\\}", "(.\\*?)");                
+                treatedUrl = treatedUrl.replaceAll("\\{.*?\\}", "(.\\*)");
             }
-                
+
             LOG.debug("Testing proxy origin={}", treatedUrl);
             Pattern pattern = Pattern.compile(treatedUrl);
-            Matcher matcher = pattern.matcher(url + END_URL_MARKER);
+            Matcher matcher = pattern.matcher(url);
             if (matcher.find()) {
                 //Found proxy, to be used 
-                String finalDestination = proxy.getDestination(); 
-                
+                String finalDestination = proxy.getDestination();
+
                 //Replace all parameters with the value from URL
-                for(int i=1; i<=matcher.groupCount(); i++) {
-                    LOG.debug("Should replace=[{}] to=[{}]", "{"+paramNames.get(i-1) +"}", matcher.group(i));
-                    finalDestination = StringUtils.replace(finalDestination, "{"+paramNames.get(i-1) +"}", matcher.group(i));
+                for (int i = 1; i <= matcher.groupCount(); i++) {
+                    LOG.debug("Should replace=[{}] to=[{}]", "{" + paramNames.get(i - 1) + "}", matcher.group(i));
+                    finalDestination = StringUtils.replace(finalDestination, "{" + paramNames.get(i - 1) + "}", matcher.group(i));
                 }
-                
+
                 //return response
                 LOG.info("Proxy found to URL:{}, matches with={}, id={}, destinationURL={}", finalDestination, treatedUrl, proxy.getId(), finalDestination);
                 return finalDestination;
@@ -92,9 +87,9 @@ public class JSimpleProxyService {
                 LOG.trace("Proxy does not match: {}", treatedUrl);
             }
         }
-        
+
         //Not match was found against database
         return null;
     }
-    
+
 }

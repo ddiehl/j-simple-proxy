@@ -67,7 +67,7 @@ public class ProxyTest {
     public void testDirectAccess () throws Exception {
         mockMvc.perform(get("/_jSimpleProxyAdmin/static/test.json"))
                  .andExpect(status().isOk())
-                 .andExpect(content().json("{test: 1}"));
+                 .andExpect(content().json("{\"test\": 1}"));
     }
     
     
