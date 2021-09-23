@@ -6,7 +6,7 @@
 	
 	<groupId>org.sparta.simplelog</groupId>
 	<artifactId>j-simple-proxy</artifactId>
-	<version>1.2</version>
+	<version>1.3</version>
 	<packaging>jar</packaging>
 	<name>JSimple Proxy</name>
 	<description>Simple proxy implementation</description>
@@ -25,20 +25,12 @@
 
 		<!-- Spring Boot properties -->
 		<start-class>org.sparta.simpleproxy.SimpleProxyBootApplication</start-class>
-
-		<!-- Jenkins build properties -->
-		<buildNumber>${user.name}-SNAPSHOT</buildNumber><!-- If no buildNumber is passed in, use this... -->
-		<jenkins.build.id>${maven.build.timestamp}</jenkins.build.id><!-- If no jenkins.build.id is passed in, use this... -->
-		<jenkins.build.url>localhost</jenkins.build.url><!-- If no jenkins.build.url is passed in, use this... -->
-		<jenkins.job.name>local package</jenkins.job.name><!-- If no jenkins.job.name is passed in, use this... -->
-		<jenkins.build.tag>${jenkins.job.name}-${buildNumber}</jenkins.build.tag><!-- If no jenkins.build.tag is passed in, use this... -->
-		<jenkins.svn.revision>local package</jenkins.svn.revision><!-- If no jenkins.svn.revision is passed in, use this... -->
 		
 		<!-- Dependencies versions -->
-		<commons-lang3.version>3.3.2</commons-lang3.version>
-		<guava.version>18.0</guava.version>
-		<cglib.version>3.1</cglib.version>
-		<jmockit.version>1.23</jmockit.version>
+		<cglib.version>3.3.0</cglib.version>
+		<commons-lang3.version>3.12.0</commons-lang3.version>
+		<guava.version>30.1.1-jre</guava.version>
+		<mockito.version>1.10.19</mockito.version>
 	</properties>
 
 	<dependencies>
@@ -102,9 +94,9 @@
 		
 		<!-- BEGIN: TESTING DEPENDENCIES -->
 		<dependency>
-			<groupId>org.jmockit</groupId>
-			<artifactId>jmockit</artifactId>
-			<version>${jmockit.version}</version>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -143,14 +135,6 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
-						<manifestEntries>
-							<Jenkins-Build-Id>${jenkins.build.id}</Jenkins-Build-Id>
-							<Jenkins-Build-Id>${jenkins.build.id}</Jenkins-Build-Id>
-							<Jenkins-Build-URL>${jenkins.build.url}</Jenkins-Build-URL>
-							<Jenkins-Job-Name>${jenkins.job.name}</Jenkins-Job-Name>
-							<Jenkins-Build-Tag>${jenkins.build.tag}</Jenkins-Build-Tag>
-							<Jenkins-SVN-Revision>${jenkins.svn.revision}</Jenkins-SVN-Revision>
-						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
