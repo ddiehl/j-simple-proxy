@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class RequestProxy {
+public class  RequestProxy {
 
     private static final Logger LOG = LoggerFactory.getLogger(RequestProxy.class);
     
